@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>8KEXP 成员列表</title>
   <style>
     body {
@@ -28,32 +28,51 @@
       width: 300px;
       text-align: center;
       background: #222;
+      border-radius: 8px;
     }
-    .member-list div {
-      margin: 0.5rem 0;
-      font-size: 1.1rem;
-      border: 1px solid #0ff;
+    .member-list a {
+      display: block;
       padding: 0.5rem;
-      border-radius: 5px;
-    }
-    a {
+      margin: 0.5rem 0;
+      background: transparent;
       color: #0ff;
       text-decoration: none;
-      font-size: 1.1rem;
-      display: block;
+      border: 1px solid #0ff;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    .member-list a:hover {
+      background-color: #0ff;
+      color: #000;
+      transform: scale(1.05);
+    }
+    a.back {
+      margin-top: 2rem;
+      color: #ffd700;
+      text-decoration: none;
+      font-size: 1rem;
+      border: 1px solid #ffd700;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    a.back:hover {
+      background-color: #ffd700;
+      color: #000;
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <img src="/mnt/data/8kexplogo.png" alt="8KEXP Logo" class="title-logo" />
+  <img src="8k.png" alt="8KEXP Logo" class="title-logo">
   <div class="member-list">
-    <div><a href="sweranawa.html">sweranawa</a></div>
-    <div><a href="kohade.html">KoHadE</a></div>
-    <div><a href="gosesummer.html">Gosesummer</a></div>
-    <div><a href="bar.html">黑羽紅</a></div>
-    <div><a href="amigoanne.html">Amigoanne</a></div>
-    <div><a href="kasumi.html">Kasumi~霞</a></div>
+    <a href="sweranawa.html">sweranawa</a>
+    <a href="kohade.html">KoHadE</a>
+    <a href="gosesummer.html">Gosesummer</a>
+    <a href="kuroane.html">黑羽紅</a>
+    <a href="kasumi.html">Kasumi~霞</a>
+    <a href="amigoanne.html">Amigoanne</a>
   </div>
-  <a href="index.html">返回首页</a>
+  <a href="index.html" class="back">返回首页</a>
 </body>
 </html>
