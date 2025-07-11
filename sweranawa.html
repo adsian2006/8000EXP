@@ -92,6 +92,32 @@
       color: #000;
       transform: scale(1.05);
     }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer a {
+      border: none;
+      padding: 0;
+      background: none;
+      display: inline-block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .footer img {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .footer a:hover {
+      transform: scale(1.2);
+      filter: invert(1);
+    }
   </style>
 </head>
 <body>
@@ -101,7 +127,7 @@
   </div>
 
   <div class="intro">
-    没有擅长的武器，挺菜的，什么也不会，别捞我。
+    没有擅长的武器，什么也不会，别捞我。
   </div>
 
   <div class="stats">
@@ -116,5 +142,14 @@
   </div>
 
   <a href="members.html">返回成员列表</a>
+
+  <div class="footer">
+    <a href="https://steamcommunity.com/profiles/76561199053692098/" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/steam/steam-original.svg" alt="Steam" />
+    </a>
+    <a href="https://discord.com/users/yourdiscordid" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" />
+    </a>
+  </div>
 </body>
 </html>
