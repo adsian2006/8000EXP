@@ -36,37 +36,51 @@
       font-size: 2rem;
     }
 
-    .intro {
-      background: #111;
-      padding: 1rem;
-      margin: 2rem auto 1rem;
+    .card {
+      perspective: 1000px;
+      margin: 2rem auto;
       width: 80%;
       max-width: 600px;
-      border: 1px solid #0ff;
-      border-radius: 8px;
+      position: relative;
+    }
+
+    .card-inner {
+      background: #111;
+      border: 1px solid #1f1e33;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 10px #1f1e33;
       text-align: center;
       font-size: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
     }
 
-    .stats {
-      background: #111;
-      padding: 2rem;
-      margin: 1rem auto;
-      width: 80%;
-      max-width: 600px;
-      border: 1px solid #0ff;
-      border-radius: 8px;
-      text-align: center;
+    .card-inner::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
+      pointer-events: none;
+      transition: background-position 0.3s ease;
     }
 
-    .stat-header, .stat-values {
+    .card:hover .card-inner {
+      box-shadow: 0 0 20px #fff, 0 0 40px #1f1e33;
+    }
+
+    .stats .stat-header,
+    .stats .stat-values {
       display: flex;
       justify-content: space-between;
       font-size: 1.2rem;
       margin-bottom: 1rem;
     }
 
-    .stat-values {
+    .stats .stat-values {
       font-size: 1.5rem;
       font-weight: bold;
     }
@@ -126,18 +140,22 @@
     <h1>sweranawa</h1>
   </div>
 
-  <div class="intro">
-    没有擅长的武器，什么也不会，别捞我。
+  <div class="card" id="intro-card">
+    <div class="card-inner">
+      没有擅长的武器，什么也不会，别捞我。
+    </div>
   </div>
 
-  <div class="stats">
-    <div class="stat-header">
-      <div>K/D</div>
-      <div>K/P</div>
-    </div>
-    <div class="stat-values">
-      <div>1.22</div>
-      <div>1.20</div>
+  <div class="card stats" id="stats-card">
+    <div class="card-inner">
+      <div class="stat-header">
+        <div>K/D</div>
+        <div>K/P</div>
+      </div>
+      <div class="stat-values">
+        <div>1.22</div>
+        <div>1.20</div>
+      </div>
     </div>
   </div>
 
@@ -151,5 +169,36 @@
       <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" />
     </a>
   </div>
+
+  <script>
+    function applyTiltEffect(cardId) {
+      const card = document.getElementById(cardId);
+      const inner = card.querySelector('.card-inner');
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = -(y - centerY) / 15;
+        const rotateY = (x - centerX) / 15;
+
+        inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        inner.style.setProperty('--x', `${x}px`);
+        inner.style.setProperty('--y', `${y}px`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        inner.style.setProperty('--x', '50%');
+        inner.style.setProperty('--y', '50%');
+      });
+    }
+
+    applyTiltEffect('intro-card');
+    applyTiltEffect('stats-card');
+  </script>
 </body>
 </html>
