@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>sweranawa 的资料</title>
   <style>
     body {
@@ -11,16 +11,18 @@
       background-color: #000;
       color: #0ff;
     }
+
     .header {
-      background-image: url('background.jpg'); /* 背景图片 */
+      background-image: url('background.jpg');
       background-size: cover;
       background-position: center;
-      height: 40vh;
+      height: 66vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
+
     .avatar {
       width: 120px;
       height: 120px;
@@ -28,32 +30,47 @@
       border: 2px solid #0ff;
       margin-bottom: 1rem;
     }
+
     h1 {
       margin: 0.5rem 0;
       font-size: 2rem;
     }
+
+    .intro {
+      background: #111;
+      padding: 1rem;
+      margin: 2rem auto 1rem;
+      width: 80%;
+      max-width: 600px;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
     .stats {
       background: #111;
       padding: 2rem;
-      margin: 2rem auto;
+      margin: 1rem auto;
       width: 80%;
       max-width: 600px;
       border: 1px solid #0ff;
       border-radius: 8px;
       text-align: center;
     }
-    .stat-header {
+
+    .stat-header, .stat-values {
       display: flex;
       justify-content: space-between;
       font-size: 1.2rem;
       margin-bottom: 1rem;
     }
+
     .stat-values {
-      display: flex;
-      justify-content: space-between;
       font-size: 1.5rem;
       font-weight: bold;
     }
+
     a {
       display: block;
       text-align: center;
@@ -61,24 +78,43 @@
       color: #ffd700;
       text-decoration: none;
       font-size: 1rem;
+      transition: all 0.3s ease;
+      border: 1px solid #ffd700;
+      padding: 0.5rem 1rem;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 6px;
+    }
+
+    a:hover {
+      background-color: #ffd700;
+      color: #000;
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <img src="avatar.jpg" alt="头像" class="avatar">
+    <img src="avatar.jpg" alt="头像" class="avatar" />
     <h1>sweranawa</h1>
   </div>
+
+  <div class="intro">
+    这里是 sweranawa 的个人简介。你可以在这里写游戏风格、代表武器、出没时间、特色标签等内容。
+  </div>
+
   <div class="stats">
     <div class="stat-header">
       <div>K/D</div>
       <div>K/P</div>
     </div>
     <div class="stat-values">
-      <div>1.22</div>
-      <div>1.20</div>
+      <div>NaN</div>
+      <div>NaN</div>
     </div>
   </div>
+
   <a href="members.html">返回成员列表</a>
 </body>
 </html>
