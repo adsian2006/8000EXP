@@ -58,7 +58,6 @@
       overflow: hidden;
     }
 
-    /* 点点背景，点直径8px，间距12px */
     .card-inner::after {
       content: "";
       pointer-events: none;
@@ -179,6 +178,34 @@
     </div>
   </div>
 
+  <!-- 新增数据卡片 -->
+  <div class="card stats" id="details-card">
+    <div class="card-inner">
+      <div class="stat-header">
+        <div>死亡数</div>
+        <div>败北回合</div>
+        <div>自杀</div>
+        <div>准确率</div>
+      </div>
+      <div class="stat-values">
+        <div>14928</div>
+        <div>336</div>
+        <div>70</div>
+        <div>14%</div>
+      </div>
+      <div class="stat-header" style="margin-top: 1rem;">
+        <div>FAL</div>
+        <div>M200</div>
+        <div>MP7</div>
+      </div>
+      <div class="stat-values">
+        <div>4383</div>
+        <div>1239</div>
+        <div>2000</div>
+      </div>
+    </div>
+  </div>
+
   <a href="members.html">返回成员列表</a>
 
   <div class="footer">
@@ -219,6 +246,7 @@
 
     applyTiltEffect('intro-card');
     applyTiltEffect('stats-card');
+    applyTiltEffect('details-card'); // 添加了新卡片的动画效果
   </script>
 </body>
 </html>
