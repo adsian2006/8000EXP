@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>翻牌找相同卡片小游戏（计时计分版）</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #game {
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 15px;
+  }
+  .card {
+    width: 90px;
+    height: 130px;
+    background: #0077cc;
+    border-radius: 10px;
+    cursor: pointer;
+    perspective: 600px;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: white;
+    user-select: none;
+  }
+  .card-front {
+    background: #0077cc;
+  }
+  .card-back {
+    background: #eee;
+    color: #333;
+    transform: rotateY(180deg);
+    font-weight: bold;
+  }
+  #info {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+    user-select: none;
+  }
+  #message {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #333;
+    height: 24px;
+  }
+  #restart-btn {
+    margin-top: 20px;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background: #0077cc;
+    color: white;
+    user-select: none;
+  }
+  #restart-btn:hover {
+    background: #005fa3;
+  }
+</style>
+</head>
+<body>
+
+<div id="info">
+  <span>得分: <span id="score">0</span></span>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <span>用时: <span id="timer">0</span> 秒</span>
+</div>
+
+<div id="game"></div>
+<div id="message"></div>
+<button id="restart-btn">重新开始</button>
+
+<script>
+  const cardsData = ['8', '8', 'K', 'K', 'E', 'E', 'X', 'X', 'P', 'P'];
+  const gameContainer = document.getElementById('game');
+  const message = document.getElementById('message');
+  const scoreSpan = document.getElementById('score');
+  const timerSpan = document.getElementById('timer');
+  const restartBtn = document.getElementById('restart-btn');
+
+  let flippedCards = [];
+  let matchedCount = 0;
+  let score = 0;
+  let timer = 0;
+  let timerId = null;
+  let gameStarted = false;
+
+  function shuffle(array) {
+    for(let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function createCard(content, index) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.value = content;
+    card.dataset.index = index;
+
+    const cardInner = document.createElement('div');
+    cardInner.classList.add('card-inner');
+
+    const cardFront = document.createElement('div');
+    cardFront.classList.add('card-front');
+    cardFront.textContent = '?';
+
+    const cardBack = document.createElement('div');
+    cardBack.classList.add('card-back');
+    cardBack.textContent = content;
+
+    cardInner.appendChild(cardFront);
+    cardInner.appendChild(cardBack);
+    card.appendChild(cardInner);
+
+    card.addEventListener('click', () => {
+      if (!gameStarted) startTimer();
+      if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
+        flipCard(card);
+      }
+    });
+
+    return card;
+  }
+
+  function flipCard(card) {
+    card.classList.add('flipped');
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+      checkMatch();
+    }
+  }
+
+  function checkMatch() {
+    const [card1, card2] = flippedCards;
+    if (card1.dataset.value === card2.dataset.value) {
+      card1.classList.add('matched');
+      card2.classList.add('matched');
+      matchedCount += 2;
+      score += 10;
+      scoreSpan.textContent = score;
+      message.textContent = '找到一对啦！';
+      flippedCards = [];
+
+      if (matchedCount === cardsData.length) {
+        message.textContent = `恭喜！全部配对完成！总得分：${score}，用时：${timer}秒。`;
+        stopTimer();
+      }
+    } else {
+      message.textContent = '不匹配，再试一次...';
+      setTimeout(() => {
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
+        flippedCards = [];
+        message.textContent = '';
+      }, 1000);
+    }
+  }
+
+  function startTimer() {
+    gameStarted = true;
+    timerId = setInterval(() => {
+      timer++;
+      timerSpan.textContent = timer;
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timerId);
+    timerId = null;
+    gameStarted = false;
+  }
+
+  function init() {
+    matchedCount = 0;
+    flippedCards = [];
+    score = 0;
+    timer = 0;
+    scoreSpan.textContent = score;
+    timerSpan.textContent = timer;
+    message.textContent = '';
+    gameStarted = false;
+    if (timerId) clearInterval(timerId);
+
+    gameContainer.innerHTML = '';
+    const shuffled = shuffle([...cardsData]);
+    shuffled.forEach((cardVal, idx) => {
+      const card = createCard(cardVal, idx);
+      gameContainer.appendChild(card);
+    });
+  }
+
+  restartBtn.addEventListener('click', init);
+
+  init();
+</script>
+
+</body>
+</html>
