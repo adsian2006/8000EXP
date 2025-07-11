@@ -2,32 +2,45 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>翻牌找相同卡片小游戏（计时计分版）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>翻牌找相同卡片小游戏（响应式版）</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     background: #f0f0f0;
+    margin: 0;
+    padding: 10px 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  #info {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #333;
+    user-select: none;
+    display: flex;
+    gap: 20px;
     justify-content: center;
-    height: 100vh;
-    margin: 0;
+    flex-wrap: wrap;
   }
   #game {
-    width: 500px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 15px;
+    grid-gap: 10px;
+    width: 100%;
+    max-width: 500px;
   }
   .card {
-    width: 90px;
-    height: 130px;
+    width: 100%;
+    aspect-ratio: 9 / 13; /* 宽高比保持90x130比例 */
     background: #0077cc;
     border-radius: 10px;
     cursor: pointer;
     perspective: 600px;
+    user-select: none;
   }
   .card-inner {
     position: relative;
@@ -48,7 +61,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 3.5vw; /* 字体根据屏幕宽度自动缩放 */
+    max-font-size: 50px;
     color: white;
     user-select: none;
   }
@@ -61,31 +75,48 @@
     transform: rotateY(180deg);
     font-weight: bold;
   }
-  #info {
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: #333;
-    user-select: none;
-  }
   #message {
     margin-top: 15px;
-    font-size: 18px;
+    font-size: 1rem;
     color: #333;
     height: 24px;
+    min-height: 24px;
+    user-select: none;
+    text-align: center;
+    max-width: 500px;
   }
   #restart-btn {
     margin-top: 20px;
-    padding: 8px 20px;
-    font-size: 16px;
+    padding: 10px 25px;
+    font-size: 1rem;
     cursor: pointer;
     border: none;
     border-radius: 6px;
     background: #0077cc;
     color: white;
     user-select: none;
+    transition: background-color 0.3s ease;
   }
   #restart-btn:hover {
-    background: #005fa3;
+    background-color: #005fa3;
+  }
+
+  /* 手机竖屏优化 */
+  @media (max-width: 400px) {
+    #game {
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 6px;
+      max-width: 100%;
+    }
+    .card-front, .card-back {
+      font-size: 14vw;
+      max-font-size: none;
+    }
+    #restart-btn {
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.2rem;
+    }
   }
 </style>
 </head>
@@ -93,7 +124,6 @@
 
 <div id="info">
   <span>得分: <span id="score">0</span></span>
-  &nbsp;&nbsp;&nbsp;&nbsp;
   <span>用时: <span id="timer">0</span> 秒</span>
 </div>
 
